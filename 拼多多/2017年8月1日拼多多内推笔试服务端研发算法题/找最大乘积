@@ -44,8 +44,8 @@ int main() {
         } else {
             if (n == 3 && min1 != 1 && min2 == 1) {
                 printf("%lld\n", max1 * max2 * min1);
-            } else if(min2 == 0 && n <= 4 || min1 == 0 && n == 3) {
-                printf("%lld\n", 0);
+            } else if(n == 4 && min2 != 1) {
+                printf("%lld\n", max1 * max2 * min2);
             } else {
                 printf("%lld\n", max1 * max2 * max3);
             }

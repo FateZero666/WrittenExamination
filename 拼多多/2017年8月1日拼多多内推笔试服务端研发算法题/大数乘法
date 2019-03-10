@@ -1,0 +1,69 @@
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <queue>
+#include <algorithm>
+#include <stack>
+#include <set>
+using namespace std;
+
+const int size = 1010;
+
+int* toNumber(char *str, int length) {
+    int *result = new int[size];
+    for (int i = length - 1, j = 0; i >= 0; --i, ++j) {
+        result[j] = str[i] - '0';
+    }
+    return result;
+}
+
+int main() {
+    char *s1 = new char[size];
+    char *s2 = new char[size];
+    scanf ("%s %s", s1, s2);
+    int f1 = 1, f2 = 1;
+    if (*s1 == '-') {
+        f1 = -1;
+        ++s1;
+    }
+    if (*s2 == '-') {
+        f2 = -1;
+        ++s2;
+    }
+    int len1 = strlen(s1), len2 = strlen(s2);
+    if (len1 < len2) {
+        char *t1 = s1;
+        s1 = s2;
+        s2 = t1;
+        int t2 = len1;
+        len1 = len2;
+        len2 = t2;
+    }
+    int *num1 = toNumber(s1, len1), *num2 = toNumber(s2, len2);
+    int ans[size * 2] = {0}, count, carry;
+    for (int j = 0; j < len2; ++j) {
+        count = j, carry = 0;
+        for(int i = 0; i < len1; ++i) {
+            int temp = num1[i] * num2[j], now = ans[count];
+            ans[count] = (now + temp + carry) % 10;
+            carry = (now + temp + carry) / 10;
+            ++count;
+        }
+        while (carry != 0) {
+            int temp = ans[count] + carry;
+            ans[count++] = temp % 10;
+            carry = temp / 10;
+        }
+    }
+    if(f1 * f2 == -1) {
+        printf("-");
+    }
+    for (int i = count - 1; i >= 0; --i) {
+        printf("%d", ans[i]);
+    }
+    printf("\n");
+    return 0;
+}
